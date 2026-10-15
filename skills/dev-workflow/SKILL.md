@@ -1,23 +1,16 @@
 ---
 name: dev-workflow
-description: Apply the user's core coding principles to routine software development, recognize or set up development and robot deployment machine layouts, and synchronize project code or training data with SSH hosts. Use for planning, implementing, debugging, refactoring, reviewing, or testing code, even when coding standards are not explicitly requested.
+description: Apply the user's coding principles during routine development, configure development or robot deployment layouts, and synchronize code or training data with SSH hosts.
 ---
 
 # Development Workflow
 
-Before starting work, read and follow [core-coding-principle.md](core-coding-principle.md), located alongside this `SKILL.md` in the installed skill folder.
+Always read and follow [core-coding-principle.md](core-coding-principle.md).
 
-Treat these principles as required instructions throughout the task, not optional reference material. Apply them by default whenever this skill is used; do not wait for the user to ask you to read or apply them.
+Read other guides only as needed:
 
-## Machine layouts
+- [Development layout](dev-machine-layout.md): workstations, cluster nodes, source links, datasets, and logs.
+- [Deployment layout](dep-machine-layout.md): robot workspaces and runtime environments.
+- [Code/data sync](code-data-sync/SKILL.md): transfers using named SSH targets.
 
-Read the relevant layout guide when the task involves machine setup, project or data placement, or deployment environments:
-
-- [dev-machine-layout.md](dev-machine-layout.md) for development workstations and cluster nodes, including project locations, shared datasets, logs, and portable symlinks.
-- [dep-machine-layout.md](dep-machine-layout.md) for robots running policies in real time, including deployment workspaces, dependency isolation, activation scripts, and ROS package workspaces.
-
-If a machine serves both roles, read both guides. Preserve intentional existing paths; if the conventions conflict for the requested change, ask the user which layout to use before changing the affected paths or environment. Inspecting a layout does not authorize reorganizing the machine.
-
-## Code and data synchronization
-
-For synchronizing project code or training data with SSH-accessible hosts, read [code-data-sync/SKILL.md](code-data-sync/SKILL.md). Use its named targets to identify the transfer paths; use the relevant machine layout guide when creating or changing those paths.
+Identify the target machine and checkout first; different paths may be worktrees of one repository. Inspect deployment state on the robot. For machines serving both roles, read both layout guides and ask about conflicts before changing affected paths or environments.
