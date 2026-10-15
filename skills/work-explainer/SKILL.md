@@ -208,7 +208,7 @@ Do not ask me to manually supervise intermediate steps unless there is a genuine
  - Start by reading the attached paper and constructing the conceptual
   story. 
   - Do not write animation code until the storyboard is coherent.
-  - If any conda environment or tools you want to install, try `paper-intro-video` conda environment first and install all dependencies there. If you still stuck at installing tools, stop and ask me where to put them.
+  - If any conda environment or tools you want to install, try `work-explainer` conda environment first and install all dependencies there. If you still stuck at installing tools, stop and ask me where to put them.
   - Refer to (DS-GRPO-Figures)[https://github.com/knightnemo/DS-GRPO-Figures] and (tong-style)[https://github.com/knightnemo/tong-style] repository, use their well-formed color map and `palatino` font
 	- https://github.com/knightnemo/tong-style
 	- https://github.com/knightnemo/OpenWAM-Figures
