@@ -16,14 +16,23 @@ Hardware experimentation and mechatronics are also part of my work, but related 
 skills/
 ├── work-explainer/
 │   └── SKILL.md
-└── instinct-workflow/
+└── dev-workflow/
     ├── SKILL.md
-    └── core_coding_principle.md
+    ├── core-coding-principle.md
+    ├── dev-machine-layout.md
+    ├── dep-machine-layout.md
+    └── code-data-sync/
+        ├── SKILL.md
+        ├── code-data-sync-setup.sh
+        ├── code-data-sync-setup.md
+        └── sync-config.json.example
 ```
 
-`work-explainer/SKILL.md` contains the original research-paper explainer pipeline. Ask for a work explanation video and provide a paper or source reference; the skill produces the video and retains all intermediate files by default. `instinct-workflow` applies the core coding principles to routine software development tasks and requires agents to read and follow `core_coding_principle.md` whenever the skill is used. Installation makes the skill available; loading it automatically depends on the host agent’s skill selection mechanism.
+`work-explainer/SKILL.md` contains the original research-paper explainer pipeline. Ask for a work explanation video and provide a paper or source reference; the skill produces the video and retains all intermediate files by default. `dev-workflow` applies the core coding principles to routine software development tasks and requires agents to read and follow `core-coding-principle.md` whenever the skill is used. Installation makes the skill available; loading it automatically depends on the host agent’s skill selection mechanism.
 
 Workflow documents:
 
-- [Core coding principles](skills/instinct-workflow/core_coding_principle.md)
+- [Core coding principles](skills/dev-workflow/core-coding-principle.md)
+- [Development machine layout](skills/dev-workflow/dev-machine-layout.md)
+- [Deployment machine layout](skills/dev-workflow/dep-machine-layout.md)
 - [Work explainer instructions](skills/work-explainer/SKILL.md) (originally `paper_intro_video_prompt.md`)

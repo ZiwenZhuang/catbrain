@@ -3,3 +3,6 @@ __pycache__/
 .venv/
 .DS_Store
 *.skill
+
+# Machine-specific sync targets and credentials
+/skills/dev-workflow/code-data-sync/sync-config.json

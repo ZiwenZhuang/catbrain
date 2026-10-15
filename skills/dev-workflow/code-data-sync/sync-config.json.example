@@ -1,0 +1,31 @@
+{
+  "instinctlab": {
+    "type": "code",
+    "ssh_host": "my-cluster",
+    "local_dir": "/home/ziwen/Projects/instinctlab",
+    "remote_dir": "/home/ziwen/Projects/instinctlab",
+    "ignore_symlinks": false
+  },
+  "training_runs": {
+    "type": "data",
+    "ssh_host": "my-cluster",
+    "local_dir": "/home/ziwen/data/training",
+    "remote_dir": "/home/ziwen/data/training",
+    "ignore_symlinks": false
+  },
+  "sim_assets": {
+    "type": "code,data",
+    "ssh_host": "my-cluster",
+    "local_dir": "/home/ziwen/Projects/sim_assets",
+    "remote_dir": "/home/ziwen/Projects/sim_assets",
+    "ignore_symlinks": true
+  },
+  "lab_shared": {
+    "type": "code",
+    "ssh_host": "lab-machine",
+    "local_dir": "/home/ziwen/Projects/shared",
+    "remote_dir": "/home/user/Projects/shared",
+    "ignore_symlinks": false,
+    "password": "simple123"
+  }
+}
