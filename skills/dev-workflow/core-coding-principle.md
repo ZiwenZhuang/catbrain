@@ -63,7 +63,7 @@ After editing:
 - run the smallest useful verification
 - update tests or docs if the change needs it
 - summarize what changed and anything still uncertain
-- no commit unless the user explicitly asked for it
+- never commit, amend, push, or create a PR unless the user explicitly asked for it in this conversation
 - if `pre-commit` is configured in the repository, do run `pre-commit run --all-files` to maintain the coding format consistency.
 
 ### Python specific coding
