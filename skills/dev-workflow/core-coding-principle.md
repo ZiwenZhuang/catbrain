@@ -99,3 +99,11 @@ When copying this into a real repository, customize:
 - Ask for how to connect and run commands on the run-host computer if not known.
 - Do Not change the files out side of the project folder on the run-host computer without explicit permission.
 - The local `AGENTS.md` file could be different from the `AGENTS.md` file in the project folder on the run-host computer. Take both files into consideration.
+
+---
+## Typical project folder for agents to read
+
+- `AGENTS.md` is the first file for the agents to read.
+- `agents/computation` shall contain git-ignored files that described all available development and test resources for the agent to use.
+	- If you are creating a new repository, add this folder to `.gitignore` while putting a `.gitkeep` file in it to keep the folder in the repository.
+
