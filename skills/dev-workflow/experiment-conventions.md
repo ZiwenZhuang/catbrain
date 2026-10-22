@@ -29,7 +29,7 @@
 - For deployment, include runtime settings and the policy configuration used by the robot.
 - Record which existing model or training run is used when resuming or deploying.
 
-## Per-Run Log Folder
+## Per-Run Log Folder (aka. Data)
 
 - Create a separate timestamped folder for each experiment run, with an optional descriptive run name.
 - Keep the run's Git records, configuration, and applicable outputs together; avoid reusing earlier run folders.
@@ -63,6 +63,16 @@ artifact without copying the model into every run folder.
 - Record available robot trajectory data through the deployment's configured ROS topics.
 - Include state, commands, feedback, and available sensor/debug topics relevant to the experiment.
 - Keep the bag data and its metadata in the run folder.
+
+## Parallel Agents in Isolated Environments
+
+- Give each agent its own Git worktree or clone and branch; never let parallel agents edit one checkout.
+- Isolate runtime environments and Python packages per agent, preferably with Docker; fall back to a per-worktree venv when Docker is impractical.
+- Keep configuration changes inside the agent's own checkout; do not edit shared configuration in place.
+- Datasets and per-run log folders may be shared across agents:
+  - Mount `~/Datasets` read-only; write derived data elsewhere.
+  - Include the agent or worktree name in run names, since parallel launches can share a timestamp.
+- In containers, mount `~/Data`, `~/Datasets`, and the main repository's `.git` at their host paths so symlinks and worktree Git records resolve.
 
 ## Example Layout
 

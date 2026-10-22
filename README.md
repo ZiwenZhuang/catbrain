@@ -21,6 +21,7 @@ skills/
     ├── core-coding-principle.md
     ├── dev-machine-layout.md
     ├── dep-machine-layout.md
+    ├── experiment-conventions.md
     └── code-data-sync/
         ├── SKILL.md
         ├── code-data-sync-setup.sh
@@ -35,4 +36,5 @@ Workflow documents:
 - [Core coding principles](skills/dev-workflow/core-coding-principle.md)
 - [Development machine layout](skills/dev-workflow/dev-machine-layout.md)
 - [Deployment machine layout](skills/dev-workflow/dep-machine-layout.md)
+- [Experiment conventions](skills/dev-workflow/experiment-conventions.md)
 - [Work explainer instructions](skills/work-explainer/SKILL.md) (originally `paper_intro_video_prompt.md`)
