@@ -8,19 +8,20 @@ Give each deployment project a `<name>_ws` workspace. Preserve existing shared l
 
 ```text
 <name>_ws/
-├── instinct_onboard/
-│   ├── activate_in_<machine-name>.sh
-│   └── <project-name>-uvenv/       # Optional project-local environment
+├── deploy_code/                    # e.g. instinct_onboard
+│   └── activate_in_<machine-name>.sh
+├── <project-name>-uvenv/           # Optional project-local environment
+├── deploy_logs/                    # All deployment running logs
 └── colcon_ws/                     # Only when building ROS packages
     └── src/
-        └── motion_target_msgs -> ../../instinct_onboard/motion_target_msgs
+        └── motion_target_msgs -> ../../deploy_code/motion_target_msgs
 ```
 
 Use the actual project/package names. Symlink message packages from the checkout rather than copying them.
 
 ## Environments and dependencies
 
-- Prefer a dedicated Conda environment in Conda's managed location. Otherwise use uv, or retain an existing venv, inside the deployment checkout.
+- Prefer a dedicated Conda environment in Conda's managed location. Otherwise use uv, or retain an existing venv, in the workspace (not inside `deploy_code`).
 - For development source in auto-sync folders, keep environments outside that source as described in the development guide.
 - Reuse compatible dependencies and respect project version constraints. Install missing dependencies in the isolated environment; avoid unrelated upgrades.
 - Explain and obtain approval for `sudo` installations unless already authorized. Stop on system-package conflicts until a resolution is agreed.
