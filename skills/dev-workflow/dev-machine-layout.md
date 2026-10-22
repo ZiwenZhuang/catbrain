@@ -6,7 +6,7 @@
 | --- | --- |
 | `~/Projects` | Default source checkout location; other locations, including auto-sync folders, are also valid. |
 | `~/workspace/<name>_ws/` | Machine-local project workspace, linking to source checkouts. |
-| `~/Data/<project>_logs/` | Training, deployment, and testing outputs; no extra project directory under `~/Data`. |
+| `~/Data/` | Machine-local external storage for project outputs, caches, and backups; layout under it is per project. |
 | `~/Datasets/` | Shared public or generated datasets. |
 
 Home-level entry points may be directories or symlinks to other disks or NAS storage. Preserve existing source locations.
@@ -32,7 +32,9 @@ Create source links for each machine's actual checkout location. Before running 
 
 ## Logs and datasets
 
-- Link project output directories to `~/Data/<project>_logs/`, preserving repository naming conventions. Separate checkouts may intentionally share logs. Colcon build logs stay in its workspace.
+- `~/Data` is a stable entry point, not a naming scheme. Folder names and structure under it vary by project (e.g. `<project>_logs`, `<project>_outputs`, model caches, backup archives); preserve existing names.
+- Projects (or workspaces) reach their external storage only through symlinks via `~/Data`, the same way on every host. Code synced to any run host then keeps valid links once that host provides the same `~/Data/...` entries.
+- Keep output directories (logs, outputs, caches) out of the checkout as real directories; link them, preserving repository naming conventions. Separate checkouts may intentionally share a target. Colcon build logs stay in its workspace.
 - Link shared datasets through `~/Datasets`; keep original archives for backup.
 - For one archive, place it directly under `~/Datasets` beside an extracted directory with the same base name, excluding `.zip`, `.tar.gz`, etc.
 - For multiple archives, use one dataset-named directory containing all archive parts and extracted data; preserve original extracted directory names.
