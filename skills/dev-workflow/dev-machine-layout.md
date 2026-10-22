@@ -4,7 +4,7 @@
 
 | Path | Purpose |
 | --- | --- |
-| `~/Projects` | Default source checkout location; existing locations, including auto-sync folders, are also valid. |
+| `~/Projects` | Default source checkout location; other locations, including auto-sync folders, are also valid. |
 | `~/workspace/<name>_ws/` | Machine-local project workspace, linking to source checkouts. |
 | `~/Data/<project>_logs/` | Training, deployment, and testing outputs; no extra project directory under `~/Data`. |
 | `~/Datasets/` | Shared public or generated datasets. |
@@ -12,6 +12,8 @@
 Home-level entry points may be directories or symlinks to other disks or NAS storage. Preserve existing source locations.
 
 ## Workspaces
+
+### For example developing deploy code locally
 
 ```text
 ~/workspace/<name>_ws/
@@ -37,7 +39,7 @@ Create source links for each machine's actual checkout location. Before running 
 
 ## Symlinks
 
-Use relative targets through the stable `~/Data` and `~/Datasets` entry points, not their backing storage paths. For example, `~/Projects/my-project/logs` can point to `../../Data/my-project_logs`. Literal `~` is not expanded in a symlink target.
+Use relative targets through the stable `~/Data` and `~/Datasets` entry points, not their backing storage paths. For example, `~/Projects/my-project/logs` can point to `~/Data/my-project_logs`. Literal `~` is not expanded in a symlink target.
 
 Calculate targets from the physical directory containing each link, including links inside symlinked checkouts. Recheck them after moves or synchronization to another machine.
 

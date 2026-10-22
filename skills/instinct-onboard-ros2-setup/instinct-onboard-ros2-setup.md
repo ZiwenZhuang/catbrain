@@ -7,7 +7,7 @@ Use [SKILL.md](SKILL.md) for workspace selection, commands, and activation. Chec
 - Build Box-Robotics `ros2_numpy` with colcon using the branch matching `ROS_DISTRO`; inspect existing checkouts before reuse. Avoid pip variants whose NumPy pin conflicts with the project.
 - Link `motion_target_msgs` from the source checkout into `colcon_ws/src/`.
 - `rclpy` comes from the system ROS installation; the environment's Python must be compatible with those binaries.
-- In a vendor hdas2 workspace, build only the required `ros2_msg` package, not the whole repository. Diagnose vendor warnings in that workspace's context.
+- If some vendor packages are required, only install necessary message packages in development machine. But ask for a fully installed deploy machine, or refer to external instruction to install them.
 
 ## ONNX Runtime and OpenCV
 
