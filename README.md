@@ -23,6 +23,7 @@ skills/
     ├── dep-machine-layout.md
     ├── restricted-project-workflow.md
     ├── experiment-conventions.md
+    ├── Linux-hard-lessons.md
     └── code-data-sync/
         ├── SKILL.md
         ├── code-data-sync-setup.sh
@@ -39,4 +40,5 @@ Workflow documents:
 - [Deployment machine layout](skills/dev-workflow/dep-machine-layout.md)
 - [Restricted project workflow](skills/dev-workflow/restricted-project-workflow.md)
 - [Experiment conventions](skills/dev-workflow/experiment-conventions.md)
+- [Linux hard lessons](skills/dev-workflow/Linux-hard-lessons.md)
 - [Work explainer instructions](skills/work-explainer/SKILL.md) (originally `paper_intro_video_prompt.md`)
