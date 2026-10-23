@@ -99,6 +99,7 @@ When copying this into a real repository, customize:
 - Ask for how to connect and run commands on the run-host computer if not known.
 - Do Not change the files out side of the project folder on the run-host computer without explicit permission.
 - The local `AGENTS.md` file could be different from the `AGENTS.md` file in the project folder on the run-host computer. Take both files into consideration.
+- If the run-host forbids exporting code or data, read [restricted-project-workflow.md](restricted-project-workflow.md) and confirm the agent runtime is approved before reading the code.
 
 ---
 ## Typical project folder for agents to read
