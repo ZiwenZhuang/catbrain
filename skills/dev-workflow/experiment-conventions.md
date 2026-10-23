@@ -42,7 +42,7 @@
 | --- | --- | --- |
 | Git records | Commit, status, and diffs, such as `git/*.diff` | Commit, branch, status, and diff, such as `git_status_*.txt` |
 | Configuration | Effective environment and agent settings, such as `params/*.yaml` | Deployment settings, policy configuration, and training-product provenance |
-| Run outputs | Model checkpoints and TensorBoard events | ROS bags containing available robot trajectory and monitoring data |
+| Run outputs | Model checkpoints and TensorBoard events | ROS bags containing joint-state data recoverable offline, optional odometry with its extrinsic to a robot link, and other available trajectory and monitoring data |
 
 ROS bags can serve both trajectory recording and monitoring; a separate trajectory
 export or curve file is not required. A deployment can reference an existing model
@@ -61,7 +61,12 @@ artifact without copying the model into every run folder.
 - For exported products such as ONNX models, preserve the link from the exported artifact to that training run and checkpoint.
 - Save this provenance in the deployment run folder, for example in `deployment_info.yaml`; a mutable alias such as `latest` alone is insufficient.
 - Record available robot trajectory data through the deployment's configured ROS topics.
-- Include state, commands, feedback, and available sensor/debug topics relevant to the experiment.
+- Always record joint-state data, in whatever topics and message types the robot provides, such that the actual robot joint states can be reconstructed offline.
+  - Raw or robot-specific data, such as motor-level states, is acceptable; record it rather than converting it at runtime.
+  - Save what the offline conversion needs alongside the bag, such as joint order and naming, motor-to-joint mapping, offsets, directions, and gear ratios, when they are not already in the recorded messages.
+- Odometry is optional, since the robot may not have a reliable estimate. When it is recorded, also record the extrinsic transform from the frame the odometry tracks, such as a camera, lidar, IMU, or motion-capture marker frame, to a robot link in the URDF, as a static transform or in the run's metadata. Without that extrinsic the odometry cannot be connected to the robot model.
+- Also include commands, feedback, and available sensor/debug topics relevant to the experiment.
+- After a run, check with `ros2 bag info` that the joint-state data, and any odometry data, are present with nonzero message counts, and that recorded odometry has its extrinsic in the bag or run metadata.
 - Keep the bag data and its metadata in the run folder.
 
 ## Parallel Agents in Isolated Environments
