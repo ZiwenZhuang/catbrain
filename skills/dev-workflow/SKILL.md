@@ -14,7 +14,8 @@ Read other guides only as needed:
 - [Restricted projects](restricted-project-workflow.md): hosts that forbid exporting code or data, worked remotely with no project content on the agent host.
 - [Experiment conventions](experiment-conventions.md): run folders, provenance, and parallel agent isolation.
 - [Code/data sync](code-data-sync/SKILL.md): transfers using named SSH targets.
-- [Linux hard lessons](Linux-hard-lessons.md): read before helping with kernel upgrades, driver installs, or reboots on Linux hosts.
+- [Progress report](progress-report/SKILL.md): research and experiment progress reports with figures and videos, as Markdown or online documents.
+- [Linux hard lessons](../Linux-hard-lessons.md): read before helping with kernel upgrades, driver installs, or reboots on Linux hosts.
 
 ## Host classification
 
