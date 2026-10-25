@@ -6,10 +6,13 @@
 | --- | --- |
 | `~/Projects` | Default source checkout location; other locations, including auto-sync folders, are also valid. |
 | `~/workspace/<name>_ws/` | Machine-local project workspace, linking to source checkouts. |
+| `~/workspace/` | Temporary tryout projects (quick clones to test or inspect something). |
 | `~/Data/` | Machine-local external storage for project outputs, caches, and backups; layout under it is per project. |
 | `~/Datasets/` | Shared public or generated datasets. |
 
 Home-level entry points may be directories or symlinks to other disks or NAS storage. Preserve existing source locations.
+
+When the user wants to clone or create a temporary tryout project, suggest putting it in `~/workspace/`, not in `~/Projects` or an auto-sync folder.
 
 ## Workspaces
 
