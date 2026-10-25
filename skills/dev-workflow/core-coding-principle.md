@@ -30,6 +30,12 @@ This is a primary engineering constraint, not a style preference.
 - Names must be plain and precise. They should describe the real semantics, ownership, lifetime, and failure path.
 - Do not silently smooth over bad state. When something is invalid, expose where the invariant was broken.
 - A new abstraction must prove that it reduces overall complexity. If it only moves complexity around, do not add it.
+### Code vs. Configuration
+- Code that just works for the current requirements is very different from code that absorbs new requirements through configuration. Design for the latter: a new requirement should be met by writing a new configuration or making minimal changes to an existing configuration file, not by changing the code logic.
+- Code and configuration are different concepts. Code implements mechanisms: algorithms, data flow, and invariants. Configuration selects and parameterizes them: which components, which values, and which combination.
+- Keep code generalizable and modular to make this possible. Expose the axes along which requirements vary (e.g., datasets, robots, models, terms, hyperparameters) as configuration, using `func` or `class_type` fields where a component must be swappable.
+- Do not hard-code values or branch on specific cases (e.g., `if robot == "g1":`) when that variation belongs in configuration.
+- This does not license speculative frameworks. Generalize along axes that are real or clearly anticipated in the project, and keep the interface small. If it is unclear which axes will vary, ask.
 ### Explicitly Discouraged
 - Adding architectural layers only to make patterns look uniform.
 - Excessive object orientation, inheritance, configuration, or generic abstraction.

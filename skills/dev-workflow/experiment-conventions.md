@@ -54,6 +54,13 @@ artifact without copying the model into every run folder.
 - Use the runner's checkpoint format for model and supported training state.
 - Save training curves through TensorBoard events or the project's equivalent logger.
 
+## Deployability of a Training Run
+
+- A training run must be deployable on the real robot with the deployment code, and at most one step once that code and its environment are in place on the machine.
+- "One step" means a deployment entry script that is handed the training run folder or its checkpoint and loads the policy from it directly. Exporting, converting, registering, or copying the model must not be a separate manual step; if the deployment needs a derived artifact, the deployment must produce it.
+- Deployability must not require code changes. Anything that differs between training runs belongs in configuration, which includes the model, environment, action space, observation and control settings, and the deployment runtime settings. This is the separate "Code" and "Configuration" distinction from the Experiment Components section: a run that spans several checkpoints, several robots, or a different observation set is still reached through configuration, not through edits.
+- If making a training run deployable would require any code change, whether in the training pipeline to produce what the deployment consumes, or in the deployment code to consume it, then stop and ask the user to design it. Do not add the code silently, and do not paper over the gap by hand-editing artifacts for the run.
+
 ## Robot Deployment Recording
 
 - Deployment typically consumes a training product; log the exact product actually loaded for each policy.
