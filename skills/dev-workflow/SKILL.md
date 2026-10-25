@@ -11,6 +11,7 @@ Read other guides only as needed:
 
 - [Development layout](dev-machine-layout.md): workstations, cluster nodes, source links, datasets, and logs.
 - [Deployment layout](dep-machine-layout.md): robot workspaces and runtime environments.
+- [Real robot deployment](real-robot-deployment.md): read before any work that could lead to running a controller or policy on a physical robot.
 - [Restricted projects](restricted-project-workflow.md): hosts that forbid exporting code or data, worked remotely with no project content on the agent host.
 - [Experiment conventions](experiment-conventions.md): run folders, provenance, and parallel agent isolation.
 - [Code/data sync](code-data-sync/SKILL.md): transfers using named SSH targets.
