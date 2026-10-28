@@ -1,4 +1,4 @@
-This a rule starting point for most agents. The `AGENTS.md` file should guide the agent reading this file first. Then proceed to other special instructions.
+Core rules for all work. Read the project's `AGENTS.md` first, then these rules, then any task-specific guide.
 
 ## Core Rules
 
@@ -10,9 +10,8 @@ This a rule starting point for most agents. The `AGENTS.md` file should guide th
 - never claim something was tested if it was not
 - do not overwrite or revert unrelated work
 - state assumptions, risks, and limitations clearly
-- do not go out-side of the project folder without explicitly asking (once will do)
 - always log the current progress in `PROGRESS.md` if the file is present
-- avoid worktrees in `pip install -e .` repos unless the import path is verified, because Python may still run the original source tree.
+- when several pipelines run at once, give each its own worktree and Docker environment; never `pip install` from different worktrees into one Conda environment.
 - when fixing bugs, or issues, explain to the user on what the root causes are before propose the fixing operation.
 - The `scripts/` directory holds entry scripts only: a script may import other modules, but code under `scripts/` must never be imported by other code. Put reusable code in a `pip`-installable package instead.
 	- Minor or historical deviations from a convention are allowed only as clearly stated exceptions. Do not add callers or otherwise broaden the deviation.
@@ -48,9 +47,9 @@ Before editing:
 
 - read the relevant files
 - look for existing helpers or patterns or code snippets to reuse
-- ask if some code snippets potentially can be reused but needs further wrapping
-- ask if the task is inconsistencies, ambiguous, risky, or conflicts with project conventions
-- ask if some logic can be modularized with more adaptive implementation such as `func` variable or `class_type` variable.
+- prefer reusing an existing snippet, wrapping it only when that is clearly the fit
+- mention it when the task is inconsistent, ambiguous, risky, or conflicts with project conventions
+- prefer a `func` or `class_type` configuration value when it clearly removes special-case branches
 - In python files, trust the type lint.
 - Do not write too many protective code. If really necessary, stop and ask the user.
 
@@ -70,7 +69,7 @@ After editing:
 - update tests or docs if the change needs it
 - summarize what changed and anything still uncertain
 - never commit, amend, push, or create a PR unless the user explicitly asked for it in this conversation
-- if `pre-commit` is configured in the repository, do run `pre-commit run --all-files` to maintain the coding format consistency.
+- if `pre-commit` is configured in the repository, run `pre-commit run --files <changed files>`. When `--all-files` rewrites pre-existing violations, keep those fixes in a dedicated commit; ask the user to make it when committing is not authorized.
 
 ### Python specific coding
 
@@ -89,28 +88,4 @@ Stop and ask if:
 - the task affects security, data, billing, privacy, or production infrastructure
 - local user changes create a conflict
 
-## Project Overrides
-
-When copying this into a real repository, customize:
-
-- setup, lint, test, and build commands
-- architecture boundaries
-- deployment or environment rules
-- domain-specific safety requirements
-- Ask the user whether the current folder runs on Agent-Host-only computer and note the information in AGENTS.md
-
----
-## Notice for running on the Agent-Host-only computer
-- If you are not running on the actual task environment. Do not run the command directly in the local computer.
-- Ask for how to connect and run commands on the run-host computer if not known.
-- Do Not change the files out side of the project folder on the run-host computer without explicit permission.
-- The local `AGENTS.md` file could be different from the `AGENTS.md` file in the project folder on the run-host computer. Take both files into consideration.
-- If the run-host forbids exporting code or data, read [restricted-project-workflow.md](restricted-project-workflow.md) and confirm the agent runtime is approved before reading the code.
-
----
-## Typical project folder for agents to read
-
-- `AGENTS.md` is the first file for the agents to read.
-- `agents/computation` shall contain git-ignored files that described all available development and test resources for the agent to use.
-	- If you are creating a new repository, add this folder to `.gitignore` while putting a `.gitkeep` file in it to keep the folder in the repository.
-
+When writing or updating a project's `AGENTS.md`, use [agents-md-template.md](agents-md-template.md).
