@@ -13,7 +13,7 @@ Use this guide when a project lives on a restricted host: a company, customer, o
 
 ## Rule
 
-Never copy a file from the restricted host to the agent host. The agent reads project content only as terminal output, preferably captured from a `tmux` pane. If a tool needs project files on the agent host, change the tool, not the rule.
+Never copy project source, data, or logs from the restricted host to the agent host. The agent reads project content only as terminal output, preferably captured from a `tmux` pane. Derived outputs such as reports may be written on the agent host. If a tool needs project files on the agent host, change the tool, not the rule.
 
 ## Before working
 
@@ -38,7 +38,7 @@ Record approvals in the owner's system. Agent memory holds only the host classif
 | --- | --- | --- |
 | Agent host → restricted host | Skill folder, commands, patches | None |
 | Restricted host → agent runtime | Terminal output the agent must read, preferably captured from `tmux` | Bulk dumps when a region is enough |
-| Restricted host → agent-host files | Nothing | Any file copy: `scp`, `sftp`, `rsync`, `tar` or archive streams, `git clone`/`fetch`/`pull`, `sshfs` or other mounts, and redirecting remote output into an agent-host file, including `/tmp` and auto-sync folders |
+| Restricted host → agent host | Owner-approved derived outputs such as reports | Project source, data, logs, and other project files |
 | Restricted host → anywhere else | Owner-approved outputs through the owner's channel, never via the agent host; pushes to approved remotes | Web search, paste services, issue trackers, external chat, CI, package registries, gists, screenshots |
 
 Never write project content into the skill folder on either host; it must stay generic and public.
@@ -91,4 +91,4 @@ ssh -t <alias> tmux attach -t agent-<project>
 ## Reporting
 
 - Report the commands run and the results observed on the restricted host. Never claim an unverified result.
-- The conversation may carry what the approved runtime allows; files written on the agent host contain no project content.
+- The conversation may carry what the approved runtime allows. Derived outputs such as a report may be written on the agent host; source, data, and logs stay on the restricted host.
