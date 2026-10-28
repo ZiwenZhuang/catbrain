@@ -28,4 +28,4 @@ Use the actual project/package names. Symlink message packages from the checkout
 
 Keep `activate_in_<machine-name>.sh` in the project; it selects the environment and ROS setup. It is typically rsynced with deployment code, so verify its paths on the robot.
 
-After setup, check environment activation, package links, and relevant builds on the target machine. Running a robot policy requires authorization for that operation; follow [real-robot-deployment.md](real-robot-deployment.md).
+After setup, check environment activation, package links, and relevant builds on the target machine. Never run a robot policy yourself; give the user the exact command and follow [real-robot-deployment.md](real-robot-deployment.md).

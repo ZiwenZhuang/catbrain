@@ -21,6 +21,6 @@ Before any reboot that will boot a new kernel (whether the user asked for a kern
    - DKMS driver: `dkms status` must list it as installed for the new kernel; otherwise run `sudo dkms autoinstall -k <version>`.
    - Prefer the matching kernel metapackage (for example `linux-generic-hwe-22.04`) so later kernel updates bring `linux-modules-extra` too.
 
-3. Ask the user to install the missing driver package for the new kernel before rebooting. Do not tell them to reboot until it is in place.
+3. Install the missing driver package for the new kernel, or ask the user to, with approval like any other `sudo` install. A wrong package can strand a headless host, so do not tell them to reboot until it is in place.
 
 4. Before the reboot, give the recovery path: hold Shift or tap Esc at boot, then choose **Advanced options** and the previous kernel, which still has a working Wi-Fi driver. A wired Ethernet port or USB phone tethering also works as a fallback network.

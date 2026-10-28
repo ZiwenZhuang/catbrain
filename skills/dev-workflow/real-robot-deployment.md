@@ -7,7 +7,7 @@ A real robot can injure people and damage itself. Safety comes before speed, and
 1. **You launch only in dry-run mode.** Any entry script you start yourself must run in dry-run mode, so that no command reaches the motors. Before launching, check in the code that dry run is in effect for this exact command: the default is dry run, no flag such as `--nodryrun` is passed, and dry-run commands go to a dummy topic or nowhere. If you can't confirm this, don't launch.
 2. **You never launch with motor control enabled.** When the user explicitly asks for no-dry-run mode, give them the exact launch command to run themselves, and stop. Do not run it, not even after they approve it, and not through a script, alias, chain (`&&`, `;`), background job, or retry loop.
 
-These rules apply to every command that can power motors, enable joints, or send commands to the robot. If you are unsure whether a command can, treat it as one that can.
+These rules apply to every command that can power motors, enable joints, or send commands to the robot. If you are unsure whether a command can, treat it as one that can. Reading sensor topics, or starting a driver that cannot command motors, is not among them; if the live data you need requires motor power, ask the user to start it and read the output.
 
 ## Know when control actually starts
 
