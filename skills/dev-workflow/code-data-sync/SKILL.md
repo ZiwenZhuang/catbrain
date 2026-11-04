@@ -33,6 +33,8 @@ Run from this skill directory. To use a config elsewhere, set `SYNC_CONFIG` to i
 ./code-data-sync-setup.sh --list
 ./code-data-sync-setup.sh --status
 ./code-data-sync-setup.sh --upload instinctlab
+./code-data-sync-setup.sh --upload instinctlab --subfolder instinct_rl
+./code-data-sync-setup.sh --upload instinctlab --subfolder source/instinct_rl
 ./code-data-sync-setup.sh --download training_runs
 ./code-data-sync-setup.sh --upload-all code
 ./code-data-sync-setup.sh --download-all data
@@ -42,7 +44,8 @@ Run from this skill directory. To use a config elsewhere, set `SYNC_CONFIG` to i
 ```
 
 - `--upload` and `--download` transfer one named target. The `--all` variants select every target whose `type` includes the requested `code` or `data` value.
-- Full transfers use `scp -r` by default. With `ignore_symlinks: true`, they use a `tar` stream over SSH that omits symbolic links. They create the destination directory and copy into it; they do **not** remove extra files already there.
+- `--upload <name> --subfolder <folder>` uploads only that subfolder, into `remote_dir` at the same path the folder has under `local_dir`. A bare name is matched against directory names anywhere under `local_dir`; a value containing `/` is used as the relative path directly. Matching is exact, not a glob or prefix. If a bare name matches several folders, or none, the script lists the candidates or reports the miss and exits without transferring, so pass the relative path to disambiguate. Paths must stay inside `local_dir`; absolute paths and `..` are rejected. This transfers folder contents, not the folder's parent.
+- Full transfers use `scp -r` by default. With `ignore_symlinks: true`, they use a `tar` stream over SSH that omits symbolic links. They create the destination directory and copy into it; they do **not** remove extra files already there. The same applies to a subfolder upload, which creates `remote_dir/<relative path>` first.
 - `--download-latest` searches under the target's `remote_dir` for run directories containing `events.out.tfevents.*`, selects the run whose event file has the newest modification time, and downloads it with `rsync` under the same relative path in `local_dir`. An optional regex filters relative run paths.
 - `--ckpt-every N` on `--download-latest` omits `model_<iteration>.pt` checkpoints not divisible by `N`, but keeps the numerically first and last checkpoints. It filters the transfer; it does not clean up previously downloaded local files.
 - `--status` checks SSH reachability. It does not verify directory contents or preview a transfer.

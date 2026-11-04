@@ -22,6 +22,7 @@ Each sync target is a named entry with a type, SSH host, and directory paths.
 |---|---|
 | *(none)* | Interactive setup — create `sync-config.json` |
 | `--upload <name>` | Upload a specific target to remote |
+| `--upload <name> --subfolder <folder>` | Upload only one subfolder of the target. A bare name is searched for as an exact directory name under `local_dir`; a value with `/` is used as the relative path directly. The folder's contents land in `remote_dir` at that same relative path. Ambiguous or missing names fail with the candidates listed. |
 | `--download <name>` | Download a specific target from remote |
 | `--download-latest <name> [pattern] [--ckpt-every N]` | Download the most recent training run folder. Optional regex filters by path. `--ckpt-every N` skips `model_*.pt` files whose iteration is not a multiple of N (always keeps first and last). |
 | `--upload-all <type>` | Upload all targets matching type (`code` or `data`) |
@@ -40,6 +41,12 @@ Each sync target is a named entry with a type, SSH host, and directory paths.
 2. **Upload / Download** — Uses `scp -r` by default. When `ignore_symlinks` is
    `true`, uses `tar` piped over SSH instead to skip symbolic links.
    Creates the destination directory if needed.
+
+   `--upload <name> --subfolder <folder>` narrows the transfer to one folder. The folder is
+   resolved to its path relative to `local_dir` — by exact directory name anywhere
+   under it, or by an explicit relative path — and its contents are copied to
+   `remote_dir` at that same relative path. Directory names are matched exactly as
+   strings: this is not a glob, prefix, or fuzzy match.
 
 3. **Bulk operations** — `--upload-all code` and `--download-all data` operate
    on every target whose `type` field contains the given keyword.

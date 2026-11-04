@@ -84,10 +84,76 @@ print('true' if val else 'false')
 "
 }
 
+# Resolve a folder argument to its relative path under the target's local_dir:
+# resolve_subfolder <local_dir> <folder>
+# A bare name is searched for by exact directory name anywhere under local_dir;
+# a value containing '/' is taken as the relative path and verified directly.
+# Prints the single matching relative path. Ambiguous or missing folders exit
+# nonzero with candidates on stderr, so the caller never guesses.
+resolve_subfolder() {
+    local base="$1" arg="$2"
+    python3 - "$base" "$arg" <<'PY'
+import os
+import sys
+
+bad = lambda msg, code=3: (print(msg, file=sys.stderr), sys.exit(code))
+
+base, raw = sys.argv[1], sys.argv[2].strip().rstrip('/')
+if not raw:
+    bad("empty folder argument")
+if os.path.isabs(raw):
+    bad(f"pass a name or a path relative to {base}, not an absolute path")
+if '..' in raw.split('/'):
+    bad(f"'{raw}' must stay inside {base}")
+
+base = os.path.abspath(base)
+if not os.path.isdir(base):
+    bad(f"local_dir does not exist or is not a directory: {base}")
+
+if '/' in raw:
+    if os.path.isdir(os.path.join(base, raw)):
+        print(raw)
+        sys.exit(0)
+    bad(f"no directory at {os.path.join(base, raw)}")
+
+matches = []
+for root, dirs, _files in os.walk(base):
+    if raw in dirs:
+        matches.append(os.path.relpath(os.path.join(root, raw), base))
+
+if not matches:
+    bad(f"no directory named '{raw}' under {base}")
+if len(matches) > 1:
+    print(f"'{raw}' matches {len(matches)} directories; pass the relative path instead:", file=sys.stderr)
+    for m in sorted(matches):
+        print('  ' + m, file=sys.stderr)
+    sys.exit(4)
+
+print(matches[0])
+PY
+}
+
 # --- SCP operations ---
 
+# Push the contents of a local directory into a remote directory:
+# push_dir <ssh_host> <local_src> <remote_dst> <ignore_symlinks> <sshpass_prefix>
+push_dir() {
+    local ssh_host="$1" local_src="$2" remote_dst="$3"
+    local ignore_symlinks="$4" sp="$5"
+    $sp ssh "$ssh_host" "mkdir -p '$remote_dst'"
+    if [ "$ignore_symlinks" = "true" ]; then
+        tar -cf - --no-recursion -C "$local_src" \
+            $(cd "$local_src" && find . -not -type l | sort) \
+            | $sp ssh "$ssh_host" "tar -xf - --no-same-owner -C '$remote_dst'"
+    else
+        $sp scp -r "$local_src/." "$ssh_host:$remote_dst/"
+    fi
+}
+
+# Upload a whole target, or one subfolder of it when a folder is given:
+# do_upload <target_name> [folder]
 do_upload() {
-    local name="$1"
+    local name="$1" folder="${2:-}"
     require_config
 
     local ssh_host local_dir remote_dir ignore_symlinks sp
@@ -101,16 +167,20 @@ do_upload() {
         error "Target '$name' not found in config"
     fi
 
-    info "Uploading '$name': $local_dir → $ssh_host:$remote_dir"
-    $sp ssh "$ssh_host" "mkdir -p '$remote_dir'"
-    if [ "$ignore_symlinks" = "true" ]; then
-        tar -cf - --no-recursion -C "$local_dir" \
-            $(cd "$local_dir" && find . -not -type l | sort) \
-            | $sp ssh "$ssh_host" "tar -xf - --no-same-owner -C '$remote_dir'"
+    local rel="" local_src="$local_dir" remote_dst="$remote_dir"
+    if [ -n "$folder" ]; then
+        if ! rel="$(resolve_subfolder "$local_dir" "$folder")"; then
+            error "Cannot resolve subfolder '$folder' for target '$name'"
+        fi
+        local_src="$local_dir/$rel"
+        remote_dst="$remote_dir/$rel"
+        info "Uploading '$name' subfolder: $local_src → $ssh_host:$remote_dst"
     else
-        $sp scp -r "$local_dir/." "$ssh_host:$remote_dir/"
+        info "Uploading '$name': $local_dir → $ssh_host:$remote_dir"
     fi
-    info "Upload complete: $name"
+
+    push_dir "$ssh_host" "$local_src" "$remote_dst" "$ignore_symlinks" "$sp"
+    info "Upload complete: $name${rel:+ ($rel)}"
 }
 
 do_download() {
@@ -403,7 +473,13 @@ Sync code and training data between local and remote machines via scp.
 
 Commands:
   (none)              Interactive setup — create sync-config.json
-  --upload <name>     Upload a specific target to remote
+  --upload <name> [--subfolder <folder>]
+                      Upload a specific target to remote. With --subfolder,
+                      upload only that folder, keeping its path relative to
+                      local_dir. A bare name is matched against directory names
+                      anywhere under local_dir; a value with '/' is used as the
+                      relative path directly. Ambiguous names fail and list the
+                      candidates.
   --download <name>   Download a specific target from remote
   --download-latest <name> [pattern] [--ckpt-every N]
                       Download the most recent training run folder (by mtime
@@ -429,8 +505,23 @@ main() {
     local cmd="${1:-setup}"
     case "$cmd" in
         --upload)
-            [ -z "${2:-}" ] && error "Usage: --upload <target-name>"
-            do_upload "$2"
+            [ -z "${2:-}" ] && error "Usage: --upload <target-name> [--subfolder <folder>]"
+            local up_name="$2"
+            local up_subfolder=""
+            shift 2
+            while [ $# -gt 0 ]; do
+                case "$1" in
+                    --subfolder)
+                        [ -z "${2:-}" ] && error "--subfolder requires a folder name or relative path"
+                        up_subfolder="$2"
+                        shift 2
+                        ;;
+                    *)
+                        error "Unexpected argument '$1' for --upload. Use: --upload <target-name> [--subfolder <folder>]"
+                        ;;
+                esac
+            done
+            do_upload "$up_name" "$up_subfolder"
             ;;
         --download)
             [ -z "${2:-}" ] && error "Usage: --download <target-name>"
