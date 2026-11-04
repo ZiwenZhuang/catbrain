@@ -84,12 +84,13 @@ artifact without copying the model into every run folder.
 ## Parallel Agents in Isolated Environments
 
 - Give each agent its own Git worktree or clone and branch; never let parallel agents edit one checkout.
-- Isolate runtime environments and Python packages per agent, preferably with Docker; fall back to a per-worktree venv when Docker is impractical.
+- Isolate runtime environments and Python packages per agent as described in the core coding principles (one Docker image, one container per worktree); fall back to a per-worktree venv when Docker is impractical.
 - Keep configuration changes inside the agent's own checkout; do not edit shared configuration in place.
 - Datasets and per-run log folders may be shared across agents:
   - Mount `~/Datasets` read-only; write derived data elsewhere.
   - Include the agent or worktree name in run names, since parallel launches can share a timestamp; regardless of the name, still space launches at least 2 seconds apart (see [Launching Runs](#launching-runs)).
 - In containers, mount `~/Data`, `~/Datasets`, and the main repository's `.git` at their host paths so symlinks and worktree Git records resolve.
+- Keep dependencies in the image and code in the mount. If a worktree changes dependencies, rebuild the image or install into that container only; do not install into the shared image from a worktree.
 
 ## Example Layout
 

@@ -11,7 +11,7 @@ Core rules for all work. Read the project's `AGENTS.md` first, then these rules,
 - do not overwrite or revert unrelated work
 - state assumptions, risks, and limitations clearly
 - always log the current progress in `PROGRESS.md` if the file is present
-- when several pipelines run at once, give each its own worktree and Docker environment; never `pip install` from different worktrees into one Conda environment.
+- when several pipelines run at once, build one Docker image and launch a container per worktree, mounting that worktree as the working code, without building an image per worktree; never `pip install` from different worktrees into one Conda environment.
 - when fixing bugs, or issues, explain to the user on what the root causes are before propose the fixing operation.
 - The `scripts/` directory holds entry scripts only: a script may import other modules, but code under `scripts/` must never be imported by other code. Put reusable code in a `pip`-installable package instead.
 	- Minor or historical deviations from a convention are allowed only as clearly stated exceptions. Do not add callers or otherwise broaden the deviation.
