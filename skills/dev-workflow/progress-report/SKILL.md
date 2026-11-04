@@ -9,7 +9,7 @@ Ask for the period, audience, experiments to cover, and output target if unclear
 
 ## Evidence
 
-- Keep full run folders on the development machine under `~/Data/...` (see [experiment-conventions.md](../experiment-conventions.md)); download remote-only runs with [code-data-sync](../code-data-sync/SKILL.md).
+- Keep full run folders on the development machine under `~/Data/...` (see [designing-launching-experiment-conventions.md](../designing-launching-experiment-conventions.md)); download remote-only runs with [code-data-sync](../code-data-sync/SKILL.md).
 - On restricted hosts, follow [restricted-project-workflow.md](../restricted-project-workflow.md) and ask before taking anything off the host.
 - Plotting scripts, intermediate plots, and unused clips stay with the evidence.
 

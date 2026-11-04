@@ -15,7 +15,7 @@ Read other guides only as needed:
 - [Deployment layout](dep-machine-layout.md): robot workspaces and runtime environments.
 - [Real robot deployment](real-robot-deployment.md): read before any work that could lead to running a controller or policy on a physical robot.
 - [Restricted projects](restricted-project-workflow.md): hosts that forbid exporting code or data, worked remotely with project source and data kept off the agent host.
-- [Experiment conventions](experiment-conventions.md): run folders, provenance, and parallel agent isolation.
+- [Experiment design and launching](designing-launching-experiment-conventions.md): experiment components, run folders and provenance, launching spaced runs, and parallel agent isolation.
 - [Code/data sync](code-data-sync/SKILL.md): transfers using named SSH targets.
 - [Progress report](progress-report/SKILL.md): research and experiment progress reports with figures and videos, as Markdown, online documents, or a static HTML site.
 - [Linux hard lessons](linux-hard-lessons.md): read before helping with kernel upgrades, driver installs, or reboots on Linux hosts.

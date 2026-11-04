@@ -84,7 +84,7 @@ ssh -t <alias> tmux attach -t agent-<project>
 - Read files by running `grep -n`, `sed -n 'a,bp'`, `git diff`, or `git status` in the session and capturing only the needed region.
 - Edit by piping a patch from a heredoc to `ssh <alias> 'cd <project> && git apply'`, never from a patch file on the agent host; review the result with `git diff` in the session.
 - Build, lint, and test on the restricted host.
-- Keep `PROGRESS.md` and run folders on the restricted host, following [experiment-conventions.md](experiment-conventions.md).
+- Keep `PROGRESS.md` and run folders on the restricted host, following [designing-launching-experiment-conventions.md](designing-launching-experiment-conventions.md).
 - Commit only when asked, following [core-coding-principle.md](core-coding-principle.md).
 - If the restricted host is unreachable, stop and tell the user. The project exists only there, so there is nothing on the agent host to continue from.
 

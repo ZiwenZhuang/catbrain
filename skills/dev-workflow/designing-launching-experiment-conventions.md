@@ -1,4 +1,4 @@
-# Experiment System Conventions
+# Experiment Design and Launching Conventions
 
 ## Scope
 
@@ -34,7 +34,6 @@
 - Create a separate timestamped folder for each experiment run, with an optional descriptive run name.
 - Keep the run's Git records, configuration, and applicable outputs together; avoid reusing earlier run folders.
 - Follow the project's existing naming and file layout rather than requiring identical folder names across projects.
-- Because most timestamps only reach second-level precision, launch batched experiment variants one by one with at least 2 seconds between launches.
 
 ### Required Contents
 
@@ -47,6 +46,12 @@
 ROS bags can serve both trajectory recording and monitoring; a separate trajectory
 export or curve file is not required. A deployment can reference an existing model
 artifact without copying the model into every run folder.
+
+## Launching Runs
+
+- **Launch batched experiment variants one at a time, at least 2 seconds apart.** Most timestamps only reach second-level precision, so two launches started in the same second receive the same run name and resolve to the same run folder; the later launch then writes into the earlier run's folder and mixes two runs' records.
+- Confirm that a launch created its own new run folder, and that it is the one you expect, before starting the next launch.
+- Do not work around a colliding timestamp by reusing or merging a folder; a variant needs its own folder.
 
 ## Training Recording
 
@@ -83,7 +88,7 @@ artifact without copying the model into every run folder.
 - Keep configuration changes inside the agent's own checkout; do not edit shared configuration in place.
 - Datasets and per-run log folders may be shared across agents:
   - Mount `~/Datasets` read-only; write derived data elsewhere.
-  - Include the agent or worktree name in run names, since parallel launches can share a timestamp.
+  - Include the agent or worktree name in run names, since parallel launches can share a timestamp; regardless of the name, still space launches at least 2 seconds apart (see [Launching Runs](#launching-runs)).
 - In containers, mount `~/Data`, `~/Datasets`, and the main repository's `.git` at their host paths so symlinks and worktree Git records resolve.
 
 ## Example Layout
@@ -115,6 +120,7 @@ does not guarantee fully recoverable configuration content.
 
 These layouts illustrate existing behavior. Some deployment scripts allow logging
 to be disabled, and their timestamp helper can reuse a folder for the same name
-within one minute. Neither behavior satisfies the per-experiment-folder convention.
+within one minute. Neither behavior satisfies the per-experiment-folder convention;
+the reuse case is what the spacing rule in [Launching Runs](#launching-runs) prevents.
 Do not assume complete source archives, dependency manifests, console capture,
 random-number-state recovery, or recording of every possible ROS topic.

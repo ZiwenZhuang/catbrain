@@ -23,7 +23,7 @@ skills/
     ├── dev-machine-layout.md
     ├── dep-machine-layout.md
     ├── restricted-project-workflow.md
-    ├── experiment-conventions.md
+    ├── designing-launching-experiment-conventions.md
     ├── linux-hard-lessons.md
     ├── code-data-sync/
     │   ├── SKILL.md
@@ -42,7 +42,7 @@ Workflow documents:
 - [Development machine layout](skills/dev-workflow/dev-machine-layout.md)
 - [Deployment machine layout](skills/dev-workflow/dep-machine-layout.md)
 - [Restricted project workflow](skills/dev-workflow/restricted-project-workflow.md)
-- [Experiment conventions](skills/dev-workflow/experiment-conventions.md)
+- [Experiment design and launching conventions](skills/dev-workflow/designing-launching-experiment-conventions.md)
 - [Progress report](skills/dev-workflow/progress-report/SKILL.md)
 - [Project AGENTS.md template](skills/dev-workflow/agents-md-template.md)
 - [Linux hard lessons](skills/dev-workflow/linux-hard-lessons.md)
